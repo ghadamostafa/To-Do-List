@@ -30,23 +30,19 @@
 					 	<!-- All list -->
 					 	<div>
 					 		<ul id="allList">
-					 			<li class="list-group-item">
-					 				<div class="form-check items">
-					 				  <label class="form-check-label"> 
-					 				  	<input class="checkbox" class="form-check-input" type="checkbox"> For what reason would it be advisable. 
-					 				  	 
-					 				  </label> 
-					 				  <span class="deleteItem"><i class="icon-remove"></i></span>
-					 				</div> 
-					 			</li>
-					 			<li class="list-group-item">
-					 				<div class="form-check items">
-					 				  <label class="form-check-label"> 
-					 				  	<input class="checkbox" class="form-check-input" type="checkbox"> For what reason would it be advisable. 
-					 				  	<span class="deleteItem"><i class="icon-remove"></i></span> 
-					 				  </label> 
-					 				</div> 
-					 			</li>
+					 			{% for item in List %}
+						 			<li class="list-group-item">
+						 				<div class="form-check items">
+						 				  <label class="form-check-label"> 
+						 				  	<input class="checkbox" class="form-check-input" type="checkbox" id="{{ item.id }}"> 			{{ item.Task }}
+						 				  	 
+						 				  </label> 
+						 				  <span class="deleteItem"><i class="icon-remove"></i></span>
+						 				</div> 
+						 			</li>
+					 			{% empty %}
+					 				<div>No Tasks added yet! </div>
+					 			{% endfor %}
 					 			
 					 		</ul>
 					 	</div>
