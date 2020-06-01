@@ -1,0 +1,25 @@
+#list{
+	width: 600px;
+	margin:20px auto;
+}
+.add-items{
+	width: 550px;
+	margin-bottom: 10px;
+}
+#addItemsForm{
+	width: 100%;	
+}
+.todo-list-input{
+	width: 100% !important;
+}
+#allList
+{
+	list-style: none;
+	padding: 0;
+}
+.deleteItem{
+	margin-left: 240px;
+}
+.items{
+	padding: 0;
+}
