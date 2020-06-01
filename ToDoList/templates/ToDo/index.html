@@ -6,7 +6,6 @@
 
 {% block content%}
 
-
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
@@ -33,9 +32,14 @@
 					 			{% for item in List %}
 						 			<li class="list-group-item">
 						 				<div class="form-check items">
-						 				  <label class="form-check-label"> 
-						 				  	<input class="checkbox" class="form-check-input" type="checkbox" id="{{ item.id }}"> 			{{ item.Task }}
-						 				  	 
+						 					{% if item.Completed %}
+						 				  		<label class="form-check-label" style="text-decoration: line-through;"> 
+						 				  			<input class="checkbox" checked="true" class="form-check-input" type="checkbox" id="{{ item.id }}">
+						 				  	{% else %}
+						 				  		<label class="form-check-label"> 
+						 				  			<input class="checkbox"  class="form-check-input" type="checkbox" id="{{ item.id }}">
+						 				  	{% endif %}
+						 				  		 	{{ item.Task }} 
 						 				  </label> 
 						 				  <span class="deleteItem"><i class="icon-remove"></i></span>
 						 				</div> 
