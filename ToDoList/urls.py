@@ -7,6 +7,7 @@ urlpatterns = [
     path('/completeTask',views.completeTask,name='completeTask'),
     path('/uncompleteTask',views.uncompleteTask,name='uncompleteTask'),
     path('/deleteTask',views.deleteTask,name='deleteTask'),
+    
 
 ]
 
