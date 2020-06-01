@@ -17,34 +17,36 @@ def addTask(request):
 	if request.method == 'POST':
 		Task=TodoList(Task=request.POST['task'])
 		Task.save()
-		# messages.success(request, 'Task Added Successfully')
 		return JsonResponse({'task_id':Task.id})
 	else:
 		return JsonResponse({'fail':"Not Available"})
-	# formData=ToDoForm(request.POST)
-	# if(formData.is_valid()):
-	# 	Item=TodoList(Task=request.POST['Task'])
-	# 	Item.save()
-	# print (request.POST['Task'])
-	# return redirect('ToDoList:index')
 
 @require_POST	
 def completeTask(request):
 	print(request.POST['task_id'])
-	task_id=request.POST['task_id']
-	Task=TodoList.objects.filter(id=task_id).update(Completed=True)
-	return JsonResponse({'recieved':'recieved'})
+	if request.method == 'POST':
+		task_id=request.POST['task_id']
+		Task=TodoList.objects.filter(id=task_id).update(Completed=True)
+		return JsonResponse({'recieved':'recieved'})
+	else:
+		return JsonResponse({'fail':"Not Available"})
 
 
 @require_POST	
 def uncompleteTask(request):
-	print(request.POST['task_id'])
-	task_id=request.POST['task_id']
-	Task=TodoList.objects.filter(id=task_id).update(Completed=False)
-	return JsonResponse({'recieved':'recieved'})
+	if request.method == 'POST':
+		print(request.POST['task_id'])
+		task_id=request.POST['task_id']
+		Task=TodoList.objects.filter(id=task_id).update(Completed=False)
+		return JsonResponse({'recieved':'recieved'})
+	else:
+		return JsonResponse({'fail':"Not Available"})
 
 def deleteTask(request):
-	print(request.POST['task_id'])
-	task_id=request.POST.get('task_id')
-	Task=TodoList.objects.filter(id=task_id).delete()
-	return JsonResponse({'recieved':'recieved'})
+	if request.method == 'POST':
+		print(request.POST['task_id'])
+		task_id=request.POST.get('task_id')
+		Task=TodoList.objects.filter(id=task_id).delete()
+		return JsonResponse({'recieved':'recieved'})
+	else:
+		return JsonResponse({'fail':"Not Available"})
