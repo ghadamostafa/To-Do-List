@@ -34,3 +34,17 @@ def completeTask(request):
 	task_id=request.POST['task_id']
 	Task=TodoList.objects.filter(id=task_id).update(Completed=True)
 	return JsonResponse({'recieved':'recieved'})
+
+
+@require_POST	
+def uncompleteTask(request):
+	print(request.POST['task_id'])
+	task_id=request.POST['task_id']
+	Task=TodoList.objects.filter(id=task_id).update(Completed=False)
+	return JsonResponse({'recieved':'recieved'})
+
+def deleteTask(request):
+	print(request.POST['task_id'])
+	task_id=request.POST.get('task_id')
+	Task=TodoList.objects.filter(id=task_id).delete()
+	return JsonResponse({'recieved':'recieved'})

@@ -1,13 +1,44 @@
 $(document).ready(function () {
 
+function showMessage(message)
+{
+	$('.container').prepend(`<div class="alert alert-success" style="margin: 10px auto;
+		width: 600px;">${message}</div>`);
+    		setTimeout(function() {
+			    $('.alert').fadeOut('fast');
+			}, 3000);
+}
+
+// delete task
+$('a').click(function(event){
+	if (confirm('are you sure you want to remove this Task?')==true)
+	{
+		event.preventDefault();
+		console.log($(event.target).parents('a'));
+		task=$(event.target).parents('a');
+		task_id=task[0].id;
+		console.log(task_id);
+		$.ajax({
+	        url : "/ToDoList/deleteTask",
+	        type : "POST", 
+	        data : { "task_id":task_id,"csrfmiddlewaretoken":$('input[name=csrfmiddlewaretoken]').val()}, 
+	        success : function(json) {
+	        	console.log("success");
+	        	task.parents('li').remove();
+	        	showMessage("Task Deleted Successfully");
+	        },
+	        error : function(xhr,errmsg,err) {}
+	   		 })
+	}
+	
+})
 
 $('input[type="checkbox"]').change(function(event) {
       console.log(event.target.id);
       task_id=event.target.id;
-      //add completed task
+      //add to completed list
       if($(this).is(":checked")){
         console.log("Checkbox is checked.");
-        // console.log($('input[name=csrfmiddlewaretoken]').val());
         $.ajax({
         url : "/ToDoList/completeTask",
         type : "POST", 
@@ -15,14 +46,26 @@ $('input[type="checkbox"]').change(function(event) {
         success : function(json) {
         	console.log("success");
         	$('#' + task_id).closest('label').css('text-decoration', 'line-through');
+        	showMessage("Task Added to completed list Successfully");
         },
         error : function(xhr,errmsg,err) {}
    		 })
 
       }
-      //
+      //add to uncompleted list
       else if($(this).is(":not(:checked)")){
         console.log("Checkbox is unchecked.");
+        $.ajax({
+        url : "/ToDoList/uncompleteTask",
+        type : "POST", 
+        data : { "task_id":task_id,"csrfmiddlewaretoken":$('input[name=csrfmiddlewaretoken]').val()}, 
+        success : function(json) {
+        	console.log("success");
+        	$('#' + task_id).closest('label').css('text-decoration', 'none');
+        	showMessage("Task Added to uncompleted list Successfully");
+        },
+        error : function(xhr,errmsg,err) {}
+   		 })
       }
 
 });
@@ -51,8 +94,7 @@ $('#addItemsForm').on('submit', function(event){
 					</div> 
 				</li>
         		`);
-        	$('.container').prepend(`<div class="alert alert-success" style="margin: 10px auto;
-    		width: 600px;">Task Added Successfully</div>`);
+        	showMessage("Task Added Successfully");
         },
 
         // handle a non-successful response
